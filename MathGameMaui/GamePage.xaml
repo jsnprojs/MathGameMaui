@@ -4,9 +4,39 @@
              x:Class="MathGameMaui.GamePage"
              Title="GamePage">
     <VerticalStackLayout>
+
         <Label 
-            Text="{Binding GameType}"
+            x:Name="QuestionLabel"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            FontSize="80"/>
+
+        <Entry
+            x:Name="AnswerEntry"
+            HorizontalOptions="Center"
+            BackgroundColor="DarkOliveGreen"
+            FontSize="50"
+            TextColor="White">
+        </Entry>
+
+        <Button 
+            x:Name="SubmitAnswerBtn"
+            Text="Answer"
+            Clicked="OnAnswerSubmitted"
+            HorizontalOptions="Center"
+            FontSize="32"/>
+
+        <Label 
+            x:Name="AnswerLabel"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="50"/>
+
+        <Label 
+            x:Name="GameOverLabel"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="50"/>
+
     </VerticalStackLayout>
 </ContentPage>

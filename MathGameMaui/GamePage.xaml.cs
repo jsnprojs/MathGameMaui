@@ -5,14 +5,41 @@ namespace MathGameMaui;
 public partial class GamePage : ContentPage
 {
 	public string GameType { get; set; }
-
-	public GamePage(string gameType)
+    int firstNumber = 0;
+    int secondNumber = 0;
+    
+    public GamePage(string gameType)
     {
 		InitializeComponent();
 
         GameType = gameType;
 
         BindingContext = this;
-			
+	    CreateNewQuestion();
 	}
+
+    private void CreateNewQuestion()
+    {
+        var random = new Random();
+
+        firstNumber = GameType != "Division" ? random.Next(1, 9) : random.Next(1, 99);
+        secondNumber = GameType != "Division" ? random.Next(1, 9) : random.Next(1, 99);
+
+        if (GameType == "Division")
+        {
+            while (firstNumber < secondNumber || firstNumber % secondNumber != 0)
+            {
+                firstNumber = random.Next(1, 99);
+                secondNumber = random.Next(1, 99);
+            }
+        }
+
+        QuestionLabel.Text = $"{firstNumber} {GameType} {secondNumber}";
+    }
+
+    private void OnAnswerSubmitted(object sender, EventArgs e)
+    {
+
+
+    }
 }
