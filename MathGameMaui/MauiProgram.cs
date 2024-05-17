@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MathGameMaui.Data;
+using Microsoft.Extensions.Logging;
 
 namespace MathGameMaui
 {
@@ -18,6 +19,9 @@ namespace MathGameMaui
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "game.db");
+
+            builder.Services.AddSingleton(s => ActivatorUtilities.CreateInstance<GameRepository>(s, dbPath));
 
             return builder.Build();
         }

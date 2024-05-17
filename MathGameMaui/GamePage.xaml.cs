@@ -1,3 +1,4 @@
+using MathGame.Maui.Models;
 using System.Security.AccessControl;
 
 namespace MathGameMaui;
@@ -76,9 +77,26 @@ public partial class GamePage : ContentPage
 
     private void GameOver()
     {
+        GameOperation gameOperation = GameType switch
+        {
+            "+" => GameOperation.Addition,
+            "-" => GameOperation.Subtraction,
+            "×" => GameOperation.Multiplication,
+            "÷" => GameOperation.Division,
+        };
+
         QuestionsArea.IsVisible = false;
         BackToMenuBtn.IsVisible = true;
         GameOverLabel.Text = $"Game over! Your got {score} out of {totalQuestions} right";
+
+        App.GameRepository.Add(new Game
+        {
+            DatePlayed = DateTime.Now,
+            Type = gameOperation,
+            Score = score
+        });
+
+
     }
 
     private void ProcessAnswer(bool isCorrect)
