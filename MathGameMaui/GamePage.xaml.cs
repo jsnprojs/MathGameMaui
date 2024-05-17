@@ -7,7 +7,10 @@ public partial class GamePage : ContentPage
 	public string GameType { get; set; }
     int firstNumber = 0;
     int secondNumber = 0;
-    
+    int score = 0;
+    const int totalQuestions = 2;
+    int gamesLeft = totalQuestions;
+
     public GamePage(string gameType)
     {
 		InitializeComponent();
@@ -39,7 +42,61 @@ public partial class GamePage : ContentPage
 
     private void OnAnswerSubmitted(object sender, EventArgs e)
     {
+        int answer = Int32.Parse(AnswerEntry.Text);
+        
+        bool isCorrect = false;
+        switch (GameType)
+        {
+            case "+":
+                isCorrect = answer == firstNumber + secondNumber;
+                break;
+            case "-":
+                isCorrect = answer == firstNumber - secondNumber;
+                break;
+            case "×":
+                isCorrect = answer == firstNumber * secondNumber;
+                break;
+            case "÷":
+                isCorrect = answer == firstNumber / secondNumber;
+                break;
+        };
+        ProcessAnswer(isCorrect);
+        gamesLeft--;
+        AnswerEntry.Text = "";
 
+        if(gamesLeft > 0)
+        {
+            CreateNewQuestion();
+        }
+        else
+        {
+            GameOver();
+        }
+    }
 
+    private void GameOver()
+    {
+        QuestionsArea.IsVisible = false;
+        BackToMenuBtn.IsVisible = true;
+        GameOverLabel.Text = $"Game over! Your got {score} out of {totalQuestions} right";
+    }
+
+    private void ProcessAnswer(bool isCorrect)
+    {
+            score = isCorrect ? score += 1 : score;
+            AnswerLabel.Text = isCorrect ? "Correct!" : "Incorrect";
+    }
+
+    private void MainMenuBtn(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new MainPage());
+    }
+
+    private void OnBackToMenu(object sender, EventArgs e)
+    {
+        score = 0;
+        gamesLeft = totalQuestions;
+
+        Navigation.PushAsync(new MainPage());
     }
 }

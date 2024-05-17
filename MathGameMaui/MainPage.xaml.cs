@@ -18,8 +18,6 @@ public partial class MainPage : ContentPage
 
     private void OnViewPreviousGamesChosen(object sender, EventArgs args)
     {
-        Button button = (Button)sender;
-
         Navigation.PushAsync(new PreviousGames());
     }
 }
